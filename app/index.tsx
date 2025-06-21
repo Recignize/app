@@ -61,24 +61,15 @@ export default function HomeScreen() {
 
         <View style={styles.divider}></View>
 
-        <View style={styles.settingsContainer} pointerEvents="none">
+        <View style={styles.settingsContainer}>
           <Text style={styles.settingsTitle}>SETTINGS</Text>
 
           <SettingsCard
             iconName="person-circle"
             iconColor="#ffffff"
             title="Your profile"
-            subtitle="Name, Age, Nationality, etc."
+            subtitle="Account info, food preferences"
             onPress={() => router.push("/profile")}
-            backgroundColor="#181818"
-          />
-
-          <SettingsCard
-            iconName="list-circle"
-            iconColor="#ffffff"
-            title="Saved lists"
-            subtitle="Inventory, utensils, appliances, etc."
-            onPress={() => router.push("/saved")}
             backgroundColor="#181818"
           />
 
@@ -86,17 +77,8 @@ export default function HomeScreen() {
             iconName="shield-checkmark"
             iconColor="#ffffff"
             title="Privacy Policy"
-            subtitle="Terms, conditions, data sharing, etc."
+            subtitle="Data handling, support etc."
             onPress={() => router.push("/privacy")}
-            backgroundColor="#181818"
-          />
-
-          <SettingsCard
-            iconName="paper-plane"
-            iconColor="#ffffff"
-            title="Check our socials!"
-            subtitle="Follow us to stay updated!"
-            onPress={() => router.push("/socials")}
             backgroundColor="#181818"
           />
         </View>

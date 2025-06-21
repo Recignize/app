@@ -24,7 +24,9 @@
       "splash": {
         "backgroundColor": "#ffdd00"
       },
-      "permissions": ["CAMERA"]
+      "permissions": [
+        "CAMERA"
+      ]
     },
     "ios": {
       "supportsTablet": true,
@@ -63,9 +65,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "9574ac96-ff47-4326-8e0c-028ffe7d9a10"
+        "projectId": "09a9a958-43c1-433b-9055-391f3e08be47"
       }
     },
-    "owner": "baddhri"
+    "owner": "badhrihari"
   }
 }

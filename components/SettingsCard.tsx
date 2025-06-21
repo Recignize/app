@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 interface SettingsCardProps {
@@ -19,7 +20,13 @@ export default function SettingsCard({
   iconColor = "#fff",
 }: SettingsCardProps) {
   return (
-    <Pressable style={[styles.card, { backgroundColor }]} onPress={onPress}>
+    <Pressable
+      style={[styles.card, { backgroundColor }]}
+      onPress={() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        onPress();
+      }}
+    >
       <View
         style={[
           styles.iconContainer,
