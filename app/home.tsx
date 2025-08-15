@@ -77,7 +77,7 @@ export default function HomeScreen() {
             iconName="shield-checkmark"
             iconColor="#ffffff"
             title="Privacy Policy"
-            subtitle="Data handling, support etc."
+            subtitle="Data handling and deletion, support etc."
             onPress={() => router.push("/privacy")}
             backgroundColor="#181818"
           />

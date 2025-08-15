@@ -348,7 +348,8 @@ export default function AddScreen() {
                   backgroundColor: isBookmarked
                     ? "rgba(255, 57, 176, 0.25)"
                     : "transparent",
-                  borderRadius: 100,
+                  borderRadius: 50,
+                  overflow: "hidden",
                 }}
               >
                 <IconButton

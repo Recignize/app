@@ -11,12 +11,15 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
 } from "react-native";
+import { useRouter } from "expo-router";
 
 export default function LoginScreen() {
   const spinValue = useRef(new Animated.Value(0)).current;
   const spinOffset = useRef(0);
   const [isSpinning, setIsSpinning] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     let animation: Animated.CompositeAnimation;
@@ -57,8 +60,24 @@ export default function LoginScreen() {
     setIsSpinning(true);
   };
 
+  const handleSignInPress = () => {
+    Alert.alert(
+      "Under Development",
+      "The sign-in feature is currently under development, the app still works as expected though!",
+      [
+        { text: "Close", style: "cancel" },
+        { text: "Continue", onPress: () => router.push("/home") },
+      ],
+      { cancelable: true }
+    );
+  };
+
   const GoogleButton = () => (
-    <TouchableOpacity style={styles.signInButton} activeOpacity={0.55}>
+    <TouchableOpacity
+      style={styles.signInButton}
+      activeOpacity={0.55}
+      onPress={handleSignInPress}
+    >
       <View style={styles.buttonContent}>
         <Ionicons
           style={[styles.buttonIcon, { top: -1, left: -76 }]}
@@ -72,7 +91,11 @@ export default function LoginScreen() {
   );
 
   const AppleButton = () => (
-    <TouchableOpacity style={styles.signInButton} activeOpacity={0.55}>
+    <TouchableOpacity
+      style={styles.signInButton}
+      activeOpacity={0.55}
+      onPress={handleSignInPress}
+    >
       <View style={styles.buttonContent}>
         <Ionicons
           style={[styles.buttonIcon, { top: -4, left: -82 }]}

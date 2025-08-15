@@ -35,12 +35,12 @@ function ErrorScreen({ code, message }: { code: number; message: string }) {
         <Text style={styles.subtitle}>{message}</Text>
         <TouchableOpacity
           style={styles.continueButton}
-          onPress={() => router.replace("/")}
+          onPress={() => router.replace("/home")}
         >
           <Text
             style={styles.continueButtonText}
             onPress={() => {
-              router.replace("/");
+              router.replace("/home");
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             }}
           >
@@ -92,24 +92,34 @@ export default function ResultsScreen() {
       let raw = "";
       try {
         if (!itemsParam) throw new Error("No items provided");
+
         const parsedItems: string[] = JSON.parse(
           decodeURIComponent(itemsParam)
         );
 
+        const storedPrefs = await AsyncStorage.getItem("userPreferences");
+        const prefs = storedPrefs
+          ? JSON.parse(storedPrefs)
+          : { cuisine: "any", diet: "none" };
+
         const systemPrompt = `
-You are a JSON recipe generator. Based on the user's items, return as many unique recipes as possible using different combinations of the items. Each recipe must be a valid JSON object with these exact keys:
-- "title": string (a catchy name)
-- "ingredients": string[] (only the ingredients used for this recipe)
-- "instructions": string (multi-step instructions, with each step numbered like '1. Do this.', '2. Then this.', etc.)
+You are a JSON recipe generator.
+Consider the user's preferences:
+- Preferred cuisine: ${prefs.cuisine}
+- Dietary restrictions: ${prefs.diet}
 
-Respond ONLY with a single JSON array of recipe objects. Do NOT include any other text. Each recipe can use a subset of the items—do NOT try to use all items in every recipe.
-`.trim();
+Generate recipes using the user's items. Respond ONLY with a JSON array of recipe objects.
+Each recipe must have:
+- "title": string
+- "ingredients": string[]
+- "instructions": string (numbered steps)
+`;
 
-        const userPrompt = `Here is a list of available items:\n${JSON.stringify(
+        const userPrompt = `Available items:\n${JSON.stringify(
           parsedItems,
           null,
           2
-        )}\n\nPlease generate as many valid and creative recipe combinations as possible. Each recipe should use a subset of the ingredients.`;
+        )}\nGenerate as many valid and creative recipes as possible using a subset of these ingredients.`;
 
         const aiResp = await fetch(
           "https://openrouter.ai/api/v1/chat/completions",
@@ -120,7 +130,7 @@ Respond ONLY with a single JSON array of recipe objects. Do NOT include any othe
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              model: "meta-llama/llama-4-maverick:free",
+              model: "openai/gpt-oss-20b:free",
               messages: [
                 { role: "system", content: systemPrompt },
                 { role: "user", content: userPrompt },
@@ -140,34 +150,26 @@ Respond ONLY with a single JSON array of recipe objects. Do NOT include any othe
         const payload = await aiResp.json();
         raw = payload.choices?.[0]?.message?.content || "";
 
-        if (!raw.trim()) {
+        if (!raw.trim())
           throw new Error("Received empty response from OpenRouter");
-        }
 
         const cleaned = raw
           .replace(/^```json\s*/i, "")
           .replace(/```$/, "")
           .trim();
-
-        let parsed: Recipe[] = JSON.parse(cleaned);
+        const parsed: Recipe[] = JSON.parse(cleaned);
 
         setRecipes(parsed);
         setError(null);
       } catch (e: any) {
         console.warn("AI fetch or parse error:", e);
 
-        const debugInstructions =
-          raw ||
-          (e.message && e.message.includes("AI output was:")
-            ? e.message.split("AI output was:\n")[1]
-            : undefined);
-
-        if (debugInstructions) {
+        if (raw) {
           setRecipes([
             {
               title: "🔍 Raw AI Output (for debugging)",
               ingredients: [],
-              instructions: debugInstructions.trim(),
+              instructions: raw.trim(),
             },
           ]);
           setError(null);
@@ -195,30 +197,24 @@ Respond ONLY with a single JSON array of recipe objects. Do NOT include any othe
     }
   }, [showBar, fadeAnim]);
 
-  // Helper function to parse and display instructions line by line
   const renderInstructions = (instructions: string) => {
-    // Check if we're dealing with debug output
     if (instructions.startsWith("{") || instructions.startsWith("[")) {
       return <Text style={styles.instructions}>{instructions}</Text>;
     }
 
-    // Split instructions by numbered pattern (1. 2. 3. etc.)
     const steps = instructions
       .split(/(\d+\.\s)/)
-      .filter(Boolean) // Remove empty strings
+      .filter(Boolean)
       .reduce((acc: string[], current, index, array) => {
-        // If this is a number like "1. ", combine with the next item
         if (/^\d+\.\s$/.test(current) && index < array.length - 1) {
           acc.push(current + array[index + 1]);
         } else if (!/^\d+\.\s$/.test(array[index - 1])) {
-          // Only add non-number items if they're not already combined
           acc.push(current);
         }
         return acc;
       }, []);
 
     return steps.map((step, idx) => {
-      // Skip lines that don't start with a number if not the first item
       if (idx > 0 && !/^\d+\./.test(step)) return null;
       return (
         <Text key={idx} style={styles.instruction}>
@@ -261,7 +257,7 @@ Respond ONLY with a single JSON array of recipe objects. Do NOT include any othe
       continueButtonColor="rgba(255, 221, 0, 1)"
       continueAllowed
       onContinue={() => {
-        router.replace("/");
+        router.replace("/home");
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       }}
     >
@@ -362,7 +358,7 @@ const styles = StyleSheet.create({
   ingredient: { color: "#ccc", marginLeft: 10, marginBottom: 2 },
   instructionsContainer: { marginTop: 5 },
   instruction: { color: "#ddd", marginBottom: 8 },
-  instructions: { marginTop: 5, color: "#ddd" }, // Kept for backward compatibility
+  instructions: { marginTop: 5, color: "#ddd" },
   continueButton: {
     backgroundColor: "#181818",
     borderRadius: 30,

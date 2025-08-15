@@ -37,16 +37,16 @@ export default function NotFoundScreen() {
 
         <TouchableOpacity
           style={styles.continueButton}
-          onPress={() => router.replace("/")}
+          onPress={() => router.replace("/home")}
         >
           <Text
             style={styles.continueButtonText}
             onPress={() => {
-              router.replace("/");
+              router.replace("/home");
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             }}
           >
-            GO BACK HOME
+            GO TO HOME
           </Text>
         </TouchableOpacity>
       </View>

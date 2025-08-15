@@ -16,6 +16,7 @@ export default function RootLayout() {
           animation: "slide_from_bottom",
           gestureEnabled: true,
           headerShown: false,
+          contentStyle: { marginTop: 30 },
         }}
       />
       <Stack.Screen
@@ -34,6 +35,7 @@ export default function RootLayout() {
           animation: "slide_from_bottom",
           gestureEnabled: true,
           headerShown: false,
+          contentStyle: { marginTop: 30 },
         }}
       />
     </Stack>

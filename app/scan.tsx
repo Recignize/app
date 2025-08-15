@@ -113,8 +113,8 @@ export default function ScanScreen() {
       }
 
       const systemPrompt = `
-You are an AI food item identifier. Your job is to identify food items in images and return JSON with:
-- "name": The food item's name (simple, 1-3 words)
+You are an AI food item identifier. Your job is to identify food ingridients and/or utensils in images and return JSON with:
+- "name": The item's name (simple, 1-3 words)
 - "description": A brief description (optional, one short sentence)
 
 Return ONLY valid JSON with these two fields. No other text.`;
