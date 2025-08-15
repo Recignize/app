@@ -8,13 +8,15 @@ export default function PrivacyModal() {
     <View style={styles.modalContainer}>
       <Text style={styles.title}>Privacy Policy</Text>
       <ScrollView>
-        <Text style={styles.sectionTitle}>1. Information We Collect</Text>
+        <Text style={styles.sectionTitle}>
+          1. Information We Collect and/or Store
+        </Text>
         <Text style={styles.text}>
           • <Text style={styles.bold}>Account Information:</Text> When you sign
-          in with Google or Apple (via Firebase Authentication), we receive your
-          unique user ID, name, and email address.{"\n"}•{" "}
-          <Text style={styles.bold}>Photo Data:</Text> The images you take or
-          upload and associated metadata (timestamp, file size, device type).
+          in with Google or Apple (via Firebase Authentication), we collect your
+          generated user ID, name, and email address.{"\n"}•{" "}
+          <Text style={styles.bold}>Photo Data:</Text> Any images you upload, as
+          well as their metadata (timestamp, file size, device type).
           {"\n"}
         </Text>
 
@@ -25,8 +27,8 @@ export default function PrivacyModal() {
           Secure sign-in and account maintenance via Firebase.{"\n"}•{" "}
           <Text style={styles.bold}>Recipe Suggestions:</Text> We send your
           photos to OpenRouter’s AI models to generate item names and recipes.
-          We store only returned recipe data and photo metadata on your local
-          device.{"\n"}
+          We store the returned recipes-related data and photo metadata on your
+          local device.{"\n"}
         </Text>
 
         <Text style={styles.sectionTitle}>3. Data Sharing & Third Parties</Text>
@@ -36,13 +38,14 @@ export default function PrivacyModal() {
           <Text style={styles.bold}>OpenRouter AI Services:</Text> Processes
           images for recipes.{"\n"}
           {"\n"}
-          We do <Text style={styles.bold}>not</Text> sell or rent your personal
-          information.{"\n"}
+          We will <Text style={styles.bold}>not</Text> sell or share your
+          personal information.{"\n"}
         </Text>
 
         <Text style={styles.text}>
-          We may update this policy. If you have questions about this policy,
-          please contact us at: average.runner216@gmail.com
+          We reserve the right to update this policy anytime. If you have
+          questions about this policy, contact the developer at:
+          badhrihari123@gmail.com
         </Text>
       </ScrollView>
     </View>

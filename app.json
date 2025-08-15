@@ -8,11 +8,11 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "recignizeapp",
+    "platforms": ["ios", "android", "web"],
     "userInterfaceStyle": "dark",
     "versionCode": 1,
     "androidStatusBar": {
-      "backgroundColor": "#ffdd00",
-      "barStyle": "dark-content"
+      "backgroundColor": "#ffdd00"
     },
     "android": {
       "package": "com.recignize",
@@ -68,6 +68,6 @@
         "projectId": "09a9a958-43c1-433b-9055-391f3e08be47"
       }
     },
-    "owner": "badhrihari"
+    "owner": "recignize-app"
   }
 }
