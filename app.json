@@ -4,13 +4,11 @@
     "slug": "recignize",
     "version": "1.0.0",
     "description": "Sustainability + AI = Tasty food :P Recignize allows you to use your existing utensils, veggies, fruits, etc., to find the best recipes using the power of multimodal LLMs.",
-    "privacy": "public",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "recignizeapp",
     "platforms": ["ios", "android", "web"],
     "userInterfaceStyle": "dark",
-    "versionCode": 1,
     "androidStatusBar": {
       "backgroundColor": "#ffdd00"
     },
@@ -30,6 +28,7 @@
     },
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "app.expo.recignize",
       "splash": {
         "backgroundColor": "#ffdd00"
       }
@@ -44,7 +43,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-screen.webp",
+          "image": "./assets/images/splash-screen.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#000"
